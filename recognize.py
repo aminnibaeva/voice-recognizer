@@ -16,7 +16,7 @@ def read_document():
 
     with sr.AudioFile(wav_data) as source:
         audio_data = recognizer.record(source)
-        return recognizer.recognize_google(audio_data)
+        return recognizer.recognize_google(audio_data, language="ru-RU")
 
 
 if __name__ == '__main__':
