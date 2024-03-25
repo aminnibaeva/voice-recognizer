@@ -8,7 +8,7 @@ recognizer = sr.Recognizer()
 
 class RecognizerService:
     def recognize_audio(self, data):
-        audio = AudioSegment.from_file(BytesIO(bytearray(data)))
+        audio = AudioSegment.from_file(data)
         wav_data = audio.export(format="wav")
 
         with sr.AudioFile(wav_data) as source:

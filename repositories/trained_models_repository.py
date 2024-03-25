@@ -18,7 +18,7 @@ class TrainedModelsRepository:
             cursor.execute(
                 sql.SQL("SELECT 1 FROM {} WHERE application_id = %s").format(sql.Identifier(trained_models_table_name)),
                 (application_id,))
-            return cursor.fetchone() is None
+            return cursor.fetchone() is not None
 
     def get_serialized_model(self, application_id):
         with conn.cursor() as cursor:
