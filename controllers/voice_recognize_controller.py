@@ -11,10 +11,12 @@ page_service = PageService()
 translator_service = TranslatorService()
 
 
-@voice_recognize_bp.route('/recognize/<int:applicationId>', methods=['POST'])
-def recognize(applicationId):
+@voice_recognize_bp.route('/recognize', methods=['POST'])
+def recognize():
     data = request.files['audio']
+    token = request.form['token']
+    language = request.form['language']
 
-    query_text = recognizer_service.recognize_audio(data)
+    query_text = recognizer_service.recognize_audio(data, language)
     translated_text = translator_service.translate(query_text, 'en')
-    return page_service.get_page(applicationId, translated_text.text)
+    return page_service.get_page(token, translated_text.text)

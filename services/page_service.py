@@ -6,8 +6,8 @@ trained_models_repository = TrainedModelsRepository()
 
 
 class PageService:
-    def get_page(self, application_id, text):
-        loaded_model_serialized = trained_models_repository.get_serialized_model(application_id)
+    def get_page(self, token, text):
+        loaded_model_serialized = trained_models_repository.get_serialized_model_by_token(token)
 
         loaded_model = pickle.loads(loaded_model_serialized)
 
