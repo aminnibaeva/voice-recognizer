@@ -30,7 +30,7 @@ class TrainedModelsRepository:
                 (token,))
             return cursor.fetchone()[0]
 
-    def insert_into_trained_models(self, serialized_model, application_id):
+    def save_trained_models(self, serialized_model, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
                 sql.SQL("INSERT INTO {} (model, application_id) VALUES (%s, %s)")

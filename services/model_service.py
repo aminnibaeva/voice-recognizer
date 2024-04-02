@@ -47,4 +47,4 @@ class ModelService:
         if is_model_exists:
             trained_models_repository.update_trained_models(serialized_model, application_id)
         else:
-            trained_models_repository.insert_into_trained_models(serialized_model, application_id)
+            trained_models_repository.save_trained_models(serialized_model, application_id)
