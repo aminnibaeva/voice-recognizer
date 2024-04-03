@@ -1,4 +1,4 @@
-from flask import request, Blueprint
+from flask import request, Blueprint, json
 
 from services.page_service import PageService
 from services.recognizer_service import RecognizerService
@@ -24,4 +24,4 @@ def recognize():
     translated_text = translator_service.translate(query_text, 'en')
     result = page_service.get_page(token, translated_text.text)
     user_service.save_user_query(username, token, result)
-    return result
+    return json.dumps({'result': result})

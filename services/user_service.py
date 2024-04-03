@@ -19,4 +19,9 @@ class UserService:
         if not is_user_exists:
             users_application_repository.save_into_users_application(user_id, application_id)
 
-        users_query_repository.save_user_query(user_id, query)
+        is_user_query_exists = users_query_repository.is_user_query_exists(user_id, query)
+
+        if is_user_query_exists:
+            users_query_repository.update_user_query_by_user_id_and_query(user_id, query)
+        else:
+            users_query_repository.save_user_query(user_id, query)

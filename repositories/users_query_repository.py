@@ -19,3 +19,32 @@ class UsersQueryRepository:
                     sql.Identifier(users_query_table)),
                 (user_id, query))
         conn.commit()
+
+    def is_user_query_exists(self, user_id, query):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                sql.SQL("SELECT 1 FROM {} WHERE user_id = %s and query = %s").format(sql.Identifier(users_query_table)),
+                (user_id, query))
+            return cursor.fetchall()
+
+    def update_user_query_by_user_id_and_query(self, user_id, query):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_id = %s and query = %s")
+                .format(sql.Identifier(users_query_table)),
+                (user_id, query))
+        conn.commit()
+
+    def update_user_query_by_user_query_id(self, user_query_id):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_query_id = %s")
+                .format(sql.Identifier(users_query_table)), user_query_id)
+        conn.commit()
+
+    def delete_user_query_by_user_query_id(self, user_query_id):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                sql.SQL("DELETE FROM {} WHERE user_query_id = %s")
+                .format(sql.Identifier(users_query_table)), user_query_id)
+        conn.commit()
