@@ -1,4 +1,4 @@
-from repositories.application_repositoty import ApplicationRepository
+from repositories.application_repository import ApplicationRepository
 from repositories.user_repository import UsersRepository
 from repositories.users_application_repository import UsersApplicationRepository
 from repositories.users_query_repository import UsersQueryRepository
