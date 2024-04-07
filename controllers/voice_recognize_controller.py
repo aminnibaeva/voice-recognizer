@@ -22,7 +22,7 @@ def recognize():
     username = request.form['username']
     language = application_service.get_language_by_token(token)
 
-    query_text = recognizer_service.recognize_audio(data, language)
+    query_text = recognizer_service.recognize_audio(data, language[0])
     translated_text = translator_service.translate(query_text, 'en')
     result = page_service.get_page(token, translated_text.text)
     user_service.save_user_query(username, token, result)

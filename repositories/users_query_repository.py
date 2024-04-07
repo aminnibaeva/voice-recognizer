@@ -45,6 +45,6 @@ class UsersQueryRepository:
     def delete_user_query_by_user_query_id(self, user_query_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("DELETE FROM {} WHERE user_query_id = %s")
-                .format(sql.Identifier(users_query_table)), user_query_id)
+                sql.SQL("DELETE FROM {} WHERE user_query_id = " + user_query_id)
+                .format(sql.Identifier(users_query_table)))
         conn.commit()

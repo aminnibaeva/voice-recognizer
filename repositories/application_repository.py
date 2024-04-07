@@ -24,7 +24,7 @@ class ApplicationRepository:
         with conn.cursor() as cursor:
             cursor.execute(
                 sql.SQL(
-                    "SELECT language FROM {} LEFT JOIN {} ON application.language_id = language_codes.id WHERE token = %s")
-                .format(sql.Identifier(language_codes, application_table)),
+                    "SELECT code FROM {} LEFT JOIN {} ON application.language_id = language_codes.id WHERE token = %s")
+                .format(sql.Identifier(language_codes), sql.Identifier(application_table)),
                 (token,))
             return cursor.fetchone()
