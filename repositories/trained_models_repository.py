@@ -34,8 +34,9 @@ class TrainedModelsRepository:
     def get_serialized_model_by_application_id(self, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("SELECT model FROM {} WHERE application_id = %s")
-                .format(sql.Identifier(application_table_name)),
+                sql.SQL(
+                    "SELECT model FROM {} WHERE application_id = %s")
+                .format(sql.Identifier(trained_models_table_name)),
                 (application_id,))
             return cursor.fetchone()[0]
 
