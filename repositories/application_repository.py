@@ -20,11 +20,11 @@ class ApplicationRepository:
                 (token,))
             return cursor.fetchone()
 
-    def get_language_by_token(self, token):
+    def get_language_by_application_id(self, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
                 sql.SQL(
-                    "SELECT code FROM {} LEFT JOIN {} ON application.language_id = language_codes.id WHERE token = %s")
-                .format(sql.Identifier(language_codes), sql.Identifier(application_table)),
-                (token,))
+                    "SELECT code FROM {} WHERE application_id = %s")
+                .format(sql.Identifier(application_table)),
+                (application_id,))
             return cursor.fetchone()

@@ -8,9 +8,7 @@ model_bp = Blueprint('model', __name__)
 
 @model_bp.route('/train-model', methods=['POST'])
 def train_model():
-    data = request.json
-
-    application_id = data.get('application_id')
+    application_id = request.json
 
     model_service.train_model(application_id)
 

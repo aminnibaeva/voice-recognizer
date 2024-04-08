@@ -10,10 +10,9 @@ users_query_repository = UsersQueryRepository()
 
 
 class UserService:
-    def save_user_query(self, username, token, query):
+    def save_user_query(self, username, application_id, query):
         user_id = users_repository.get_user_id_by_username(username)
 
-        application_id = application_repository.get_application_id_by_token(token)
         is_user_exists = users_application_repository.is_user_application_exists(user_id, application_id)
 
         if not is_user_exists:

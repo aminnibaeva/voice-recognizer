@@ -18,12 +18,12 @@ translator_service = TranslatorService()
 @voice_recognize_bp.route('/recognize', methods=['POST'])
 def recognize():
     data = request.files['audio']
-    token = request.form['token']
+    application_id = request.form['applicationId']
     username = request.form['username']
-    language = application_service.get_language_by_token(token)
+    language = application_service.get_language_by_application_id(application_id)
 
     query_text = recognizer_service.recognize_audio(data, language[0])
     translated_text = translator_service.translate(query_text, 'en')
-    result = page_service.get_page(token, translated_text.text)
-    user_service.save_user_query(username, token, result)
+    result = page_service.get_page(application_id, translated_text.text)
+    user_service.save_user_query(username, application_id, result)
     return json.dumps({'result': result})
