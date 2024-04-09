@@ -4,7 +4,7 @@ from psycopg2 import sql
 conn = psycopg2.connect(
     dbname="voice-assistant",
     user="postgres",
-    password="postgres",
+    password="qwerty007",
     host="localhost",
     port="5432"
 )
