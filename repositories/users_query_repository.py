@@ -4,7 +4,7 @@ from psycopg2 import sql
 conn = psycopg2.connect(
     dbname="voice-assistant",
     user="postgres",
-    password="qwerty007",
+    password="postgres",
     host="localhost",
     port="5432"
 )
@@ -12,12 +12,12 @@ users_query_table = "users_query"
 
 
 class UsersQueryRepository:
-    def save_user_query(self, user_id, query):
+    def save_user_query(self, application_id, user_id, query):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("INSERT INTO {} (user_id, query) VALUES (%s, %s)").format(
+                sql.SQL("INSERT INTO {} (user_id, query, application_id) VALUES (%s, %s, %s)").format(
                     sql.Identifier(users_query_table)),
-                (user_id, query))
+                (user_id, query, application_id))
         conn.commit()
 
     def is_user_query_exists(self, user_id, query):
@@ -27,18 +27,18 @@ class UsersQueryRepository:
                 (user_id, query))
             return cursor.fetchall()
 
-    def update_user_query_by_user_id_and_query(self, user_id, query):
+    def update_user_query_by_user_id_and_query(self, application_id, user_id, query):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_id = %s and query = %s")
+                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_id = %s and query = %s and application_id = %s")
                 .format(sql.Identifier(users_query_table)),
-                (user_id, query))
+                (user_id, query, application_id))
         conn.commit()
 
     def update_user_query_by_user_query_id(self, user_query_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_query_id = %s")
+                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_query_id = %s ")
                 .format(sql.Identifier(users_query_table)), user_query_id)
         conn.commit()
 
