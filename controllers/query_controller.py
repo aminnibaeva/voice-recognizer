@@ -13,6 +13,7 @@ def update_query():
     query_service.update_query(user_query_id)
     return user_query_id
 
+
 @query_bp.route('/delete_query', methods=['POST'])
 def delete_query():
     user_query_id = request.form['userQueryId']

@@ -35,22 +35,23 @@ class TrainedModelsRepository:
         with conn.cursor() as cursor:
             cursor.execute(
                 sql.SQL(
-                    "SELECT model FROM {} WHERE application_id = %s")
+                    "SELECT model, vectorizer, label_encoder FROM {} WHERE application_id = %s")
                 .format(sql.Identifier(trained_models_table_name)),
                 (application_id,))
-            return cursor.fetchone()[0]
+            return cursor.fetchone()
 
-    def save_trained_models(self, serialized_model, application_id):
+    def save_trained_models(self, serialized_model, save_vectorizer, save_label_encoder, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("INSERT INTO {} (model, application_id) VALUES (%s, %s)")
-                .format(sql.Identifier(trained_models_table_name)), (serialized_model, application_id))
+                sql.SQL("INSERT INTO {} (model, vectorizer, label_encoder, application_id) VALUES (%s, %s)")
+                .format(sql.Identifier(trained_models_table_name)),
+                (serialized_model, save_vectorizer, save_label_encoder, application_id))
         conn.commit()
 
-    def update_trained_models(self, serialized_model, application_id):
+    def update_trained_models(self, serialized_model, save_vectorizer, save_label_encoder, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("UPDATE {} SET model = %s WHERE application_id = %s")
+                sql.SQL("UPDATE {} SET model = %s, vectorizer = %s, label_encoder = %s WHERE application_id = %s")
                 .format(sql.Identifier(trained_models_table_name)),
-                (serialized_model, application_id))
+                (serialized_model, save_vectorizer, save_label_encoder, application_id))
         conn.commit()
