@@ -1,8 +1,8 @@
 import numpy as np
 import spacy
+from keras import Sequential
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.preprocessing import LabelEncoder
-from keras import Sequential
 from keras.layers import Dense, Dropout
 
 # Загрузка модели SpaCy для обработки текста
