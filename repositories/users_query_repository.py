@@ -12,27 +12,30 @@ users_query_table = "users_query"
 
 
 class UsersQueryRepository:
-    def save_user_query(self, application_id, user_id, query):
+    def save_user_query(self, application_id, user_id, query_name, url, url_application):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("INSERT INTO {} (user_id, query, application_id) VALUES (%s, %s, %s)").format(
+                sql.SQL(
+                    "INSERT INTO {} (user_id, query_name, application_id, url, url_application, number_of_visits) VALUES (%s, %s, %s, %s, %s, 1)").format(
                     sql.Identifier(users_query_table)),
-                (user_id, query, application_id))
+                (user_id, query_name, application_id, url, url_application))
         conn.commit()
 
-    def is_user_query_exists(self, user_id, query):
+    def is_user_query_exists(self, user_id, query_name):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("SELECT 1 FROM {} WHERE user_id = %s and query = %s").format(sql.Identifier(users_query_table)),
-                (user_id, query))
+                sql.SQL("SELECT 1 FROM {} WHERE user_id = %s and query_name = %s").format(
+                    sql.Identifier(users_query_table)),
+                (user_id, query_name))
             return cursor.fetchall()
 
-    def update_user_query_by_user_id_and_query(self, application_id, user_id, query):
+    def update_user_query_by_user_id_and_query(self, application_id, user_id, query_name):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_id = %s and query = %s and application_id = %s")
+                sql.SQL(
+                    "UPDATE {} SET number_of_visits = (number_of_visits + 1) WHERE user_id = %s and query_name = %s and application_id = %s")
                 .format(sql.Identifier(users_query_table)),
-                (user_id, query, application_id))
+                (user_id, query_name, application_id))
         conn.commit()
 
     def update_user_query_by_user_query_id(self, user_query_id):

@@ -43,7 +43,7 @@ class TrainedModelsRepository:
     def save_trained_models(self, serialized_model, save_vectorizer, save_label_encoder, application_id):
         with conn.cursor() as cursor:
             cursor.execute(
-                sql.SQL("INSERT INTO {} (model, vectorizer, label_encoder, application_id) VALUES (%s, %s)")
+                sql.SQL("INSERT INTO {} (model, vectorizer, label_encoder, application_id) VALUES (%s, %s, %s, %s)")
                 .format(sql.Identifier(trained_models_table_name)),
                 (serialized_model, save_vectorizer, save_label_encoder, application_id))
         conn.commit()

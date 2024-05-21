@@ -20,6 +20,13 @@ class ApplicationRepository:
                 (token,))
             return cursor.fetchone()
 
+    def get_application_url_by_id(self, application_id):
+        with conn.cursor() as cursor:
+            cursor.execute(
+                sql.SQL("SELECT url FROM {} WHERE application_id = %s").format(sql.Identifier(application_table)),
+                (application_id,))
+            return cursor.fetchone()
+
     def get_language_by_application_id(self, application_id):
         with conn.cursor() as cursor:
             cursor.execute(

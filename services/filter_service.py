@@ -18,7 +18,7 @@ class FilterService:
 
         while text != '':
             for category in categories:
-                if text.startswith(category[0]):
+                if text.startswith(category[0].lower()):
                     if current_element != {}:
                         result.append(current_element)
                     current_element = {}

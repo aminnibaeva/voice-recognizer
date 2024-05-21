@@ -24,6 +24,6 @@ def recognize():
 
     query_text = recognizer_service.recognize_audio(data, language[0])
     translated_text = translator_service.translate(query_text, 'en')
-    result = page_service.get_page(application_id, translated_text.text)
-    user_service.save_user_query(username, application_id, result)
-    return json.dumps({'result': result})
+    page_name = page_service.get_page_name(application_id, translated_text.text)
+    user_service.save_user_query(username, application_id, page_name)
+    return json.dumps({'result': page_name})
