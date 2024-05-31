@@ -33,9 +33,6 @@ class ModelService:
         for row in rows:
             translated_associations = translator_service.translate(row[3], 'en')
             for association in translated_associations.text.split(","):
-                # for search_word in search_words:
-                #     page_names.append(row[2])
-                #     associations.append(search_word + association)
                 synonyms = find_phrase_synonyms(association)
                 synonyms.append(association)
                 for search_word in search_words:
