@@ -67,14 +67,8 @@ class ModelService:
         save_vectorizer = pickle.dumps(vectorizer)
         save_label_encoder = pickle.dumps(label_encoder)
 
-        is_model_exists = trained_models_repository.is_trained_model_exists_by_application_id(application_id)
-
-        if is_model_exists:
-            trained_models_repository.update_trained_models(serialized_model, save_vectorizer, save_label_encoder,
-                                                            application_id)
-        else:
-            trained_models_repository.save_trained_models(serialized_model, save_vectorizer, save_label_encoder,
-                                                          application_id)
+        trained_models_repository.save_trained_models(serialized_model, save_vectorizer, save_label_encoder,
+                                                      application_id)
 
 
 def find_phrase_synonyms(phrase):
